@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>📝 My Todo List</h2>
+    <div>
+      <a href="{% url 'create_todo' %}" class="btn btn-success">➕ Add New</a>
+      <a href="{% url 'trash_list' %}" class="btn btn-warning">🗑️ Trash</a>
+    </div>
+  </div>
+
+  <table class="table table-striped table-hover table-bordered">
+    <thead class="table-dark">
+      <tr>
+        <th>SI No</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Is Complete</th>
+        <th>Is Deleted</th>
+        <th>Date Completed</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for todo in todos %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ todo.title }}</td>
+        <td>{{ todo.description }}</td>
+
+        <!-- ✅ Status -->
+        <td>
+          {% if todo.isComplete %}
+            ✅ Completed
+          {% else %}
+            ⌛ Pending
+          {% endif %}
+        </td>
+
+        <!-- ✅ Deleted -->
+        <td>
+          {% if todo.isDeleted %}
+            🗑️ Yes
+          {% else %}
+            ❌ No
+          {% endif %}
+        </td>
+
+        <!-- ✅ Date Completed -->
+        <td>
+          {% if todo.isComplete %}
+            {{ todo.updated_at|date:'Y-m-d g:i A' }}
+          {% else %}
+            Not yet completed
+          {% endif %}
+        </td>
+
+        <!-- ✅ Actions -->
+        <td>
+          <div class="d-flex gap-2">
+            <a href="{% url 'update_todo' todo.pk %}" class="btn btn-sm btn-primary">
+              ✏️ Edit
+            </a>
+            <form action="{% url 'delete_todo' todo.pk %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-sm btn-danger">
+                🗑️ Delete
+              </button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="7" class="text-center text-muted">No Todos Found</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+

@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.log
+
+# Django
+*.sqlite3
+db.sqlite3
+*.pot
+*.pyc
+*.pyo
+*.pyd
+
+# Environment
+env/
+venv/
+ENV/
+.venv/
+.env
+.env.*
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Migrations (Optional)
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# Node (if used)
+node_modules/
+
+# Static/Media (if using collectstatic or user uploads)
+staticfiles/
+media/
